@@ -1,38 +1,5 @@
 [
-  [
-    
-    {
-      "key": "address",
-      "type": "text",
-      "contentType": "address",
-      "label": "Adresse",
-      "autocomplete": "adress-line1",
-      "placeholder": "999 avenue de France"
-    },
-    {
-      "key": "city",
-      "type": "text",
-      "contentType": "city",
-      "label": "Ville",
-      "autocomplete": "address-level2",
-      "placeholder": "Paris"
-    },
-    {
-      "key": "zipcode",
-      "type": "number",
-      "contentType": "zipcode",
-      "label": "Code Postal",
-      "autocomplete": "postal-code",
-      "placeholder": "75001",
-      "inputmode": "numeric",
-      "pattern": "[0-9]{5}",
-      "min": 1000,
-      "max": 99999,
-      "minlength":4,
-      "maxlength":5
-    }
-  ],
-  [
+    [
     {
       "key": "creationDate",
       "type": "date",
@@ -68,15 +35,15 @@
       "items": [
         {
           "code": "travail",
-          "label": "Déplacements entre le domicile et le lieu d’exercice de l’activité professionnelle ou un établissement d’enseignement ou de formation, déplacements professionnels ne pouvant être différés <a class=\"footnote\" href=\"#footnote2\">[2]</a> , déplacements pour un concours ou un examen."
+          "label": "Déplacements entre le domicile et le lieu d’exercice de l’activité professionnelle."
         },
         {
           "code": "achats",
-          "label": "Déplacements pour effectuer des achats de fournitures nécessaires à l'activité professionnelle, des achats de première nécessité <a class=\"footnote\" href=\"#footnote3\">[3]</a> dans des établissements dont les activités demeurent autorisées, le retrait de commande et les livraisons à domicile ;"
+          "label": "Déplacements pour effectuer des achats de première nécessité"
         },
         {
           "code": "sante",
-          "label": "Consultations, examens et soins ne pouvant être assurés à distance et l’achat de médicaments ;"
+          "label": "Consultations, examens et soins et l’achat de médicaments ;"
         },
         {
           "code": "famille",
@@ -88,7 +55,7 @@
         },
         {
           "code": "sport_animaux",
-          "label": "Déplacements brefs, dans la limite d'une heure quotidienne et dans un rayon maximal d'un kilomètre autour du domicile, liés soit à l'activité physique individuelle des personnes, à l'exclusion de toute pratique sportive collective et de toute proximité avec d'autres personnes, soit à la promenade avec les seules personnes regroupées dans un même domicile, soit aux besoins des animaux de compagnie ;"
+          "label": "Déplacements brefs, sport, animaux;"
         },
         {
           "code": "convocation",

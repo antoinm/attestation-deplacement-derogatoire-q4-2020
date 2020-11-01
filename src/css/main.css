@@ -145,17 +145,17 @@ p {
   margin-right: auto;
 }
 
-#form-profile .form-radio .form-check {
+#form-attestation .form-radio .form-check {
   margin-bottom: 1rem;
 }
 
-#form-profile .form-radio-label .form-check-label {
+#form-attestation .form-radio-label .form-check-label {
   font-weight: 400;
   transform: translateY(-2px);
 }
 
 @media (prefers-color-scheme: dark) {
-  #form-profile .form-radio-label .form-check-label {
+  #form-attestation .form-radio-label .form-check-label {
     color: #ddd;
   }
 }
@@ -356,31 +356,6 @@ input[type=number] {
   background-color: #3031C1;
 }
 
-.github {
-  font-size: 0.7em;
-  text-align: center;
-  color: black;
-}
-
-@media (prefers-color-scheme: dark) {
-  .github {
-    color: white
-  }
-}
-
-.github-link {
-  color: #000191;
-}
-
-@media (prefers-color-scheme: dark) {
-  .github-link {
-    color: #A3A3FF;
-  }
-}
-
-.github-link:hover {
-    text-decoration: underline;
-}
 
 .label-mi {
   text-align: center;
@@ -650,10 +625,7 @@ input[type=number] {
 }
 
 .fieldset {
-  margin-left: -1.25em;
-  margin-right: -1.25em;
-  padding-left: 1.25em;
-  padding-right: 1.25em;
+
   border: 3px solid transparent;
 }
 
@@ -663,4 +635,19 @@ input[type=number] {
 
 .fieldset-error {
   border: 3px solid red;
+}
+
+
+.form-checkbox{
+  display: flex;
+  justify-content: start;
+  margin-bottom: 0.5rem;
+}
+
+.form-checkbox input {
+  margin:0 0.5rem 0 0;
+}
+.form-checkbox label {
+  line-height: 1em;
+  margin-bottom: 0;
 }

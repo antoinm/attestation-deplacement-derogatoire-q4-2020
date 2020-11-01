@@ -1,9 +1,9 @@
 import { $, $$, downloadBlob } from './dom-utils'
-import { addSlash, getFormattedDate } from './util'
+import { getFormattedDate } from './util'
 import pdfBase from '../certificate.pdf'
 import { generatePdf } from './pdf-util'
 
-const conditions = {
+export const formProfileConditions = {
   '#field-firstname': {
     length: 1,
   },
@@ -25,6 +25,9 @@ const conditions = {
   '#field-zipcode': {
     pattern: /\d{5}/g,
   },
+}
+
+const formAttestationConditions = {
   '#field-datesortie': {
     pattern: /\d{4}-\d{2}-\d{2}/g,
   },
@@ -33,7 +36,7 @@ const conditions = {
   },
 }
 
-function validateAriaFields () {
+export function validateAriaFields(conditions) {
   return Object.keys(conditions)
     .map((field) => {
       const fieldData = conditions[field]
@@ -53,13 +56,15 @@ function validateAriaFields () {
     .includes(true)
 }
 
-export function setReleaseDateTime (releaseDateInput) {
+export function setReleaseDateTime(releaseDateInput) {
   const loadedDate = new Date()
   releaseDateInput.value = getFormattedDate(loadedDate)
 }
 
-export function getProfile (formInputs) {
-  const fields = {}
+export function getProfile(formInputs) {
+  const profile = JSON.parse($('select').value)
+
+  const fields = { ...profile }
   for (const field of formInputs) {
     let value = field.value
     if (field.id === 'field-datesortie') {
@@ -71,14 +76,21 @@ export function getProfile (formInputs) {
   return fields
 }
 
-export function getReasons (reasonInputs) {
+export function getReasons(reasonInputs) {
   const reasons = reasonInputs
-    .filter(input => input.checked)
-    .map(input => input.value).join(', ')
+    .filter((input) => input.checked)
+    .map((input) => input.value)
+    .join(', ')
   return reasons
 }
 
-export function prepareInputs (formInputs, reasonInputs, reasonFieldset, reasonAlert, snackbar) {
+export function prepareInputs(
+  formInputs,
+  reasonInputs,
+  reasonFieldset,
+  reasonAlert,
+  snackbar
+) {
   formInputs.forEach((input) => {
     const exempleElt = input.parentNode.parentNode.querySelector('.exemple')
     const validitySpan = input.parentNode.parentNode.querySelector('.validity')
@@ -94,63 +106,19 @@ export function prepareInputs (formInputs, reasonInputs, reasonFieldset, reasonA
     }
   })
 
-  $('#field-birthday').addEventListener('keyup', function (event) {
-    event.preventDefault()
-    const input = event.target
-    const key = event.keyCode || event.charCode
-    if (key !== 8 && key !== 46) {
-      input.value = addSlash(input.value)
-    }
-  })
-
-  reasonInputs.forEach(radioInput => {
+  reasonInputs.forEach((radioInput) => {
     radioInput.addEventListener('change', function (event) {
-      const isInError = reasonInputs.every(input => !input.checked)
+      const isInError = reasonInputs.every((input) => !input.checked)
       reasonFieldset.classList.toggle('fieldset-error', isInError)
       reasonAlert.classList.toggle('hidden', !isInError)
     })
   })
 
-  $('#generate-btn').addEventListener('click', async (event) => {
-    event.preventDefault()
-
-    const reasons = getReasons(reasonInputs)
-    if (!reasons) {
-      reasonFieldset.classList.add('fieldset-error')
-      reasonAlert.classList.remove('hidden')
-      reasonFieldset.scrollIntoView && reasonFieldset.scrollIntoView()
-      return
-    }
-
-    const invalid = validateAriaFields()
-    if (invalid) {
-      return
-    }
-
-    console.log(getProfile(formInputs), reasons)
-
-    const pdfBlob = await generatePdf(getProfile(formInputs), reasons, pdfBase)
-
-    const creationInstant = new Date()
-    const creationDate = creationInstant.toLocaleDateString('fr-CA')
-    const creationHour = creationInstant
-      .toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
-      .replace(':', '-')
-
-    downloadBlob(pdfBlob, `attestation-${creationDate}_${creationHour}.pdf`)
-
-    snackbar.classList.remove('d-none')
-    setTimeout(() => snackbar.classList.add('show'), 100)
-
-    setTimeout(function () {
-      snackbar.classList.remove('show')
-      setTimeout(() => snackbar.classList.add('d-none'), 500)
-    }, 6000)
-  })
+  $('#generate-btn').addEventListener('click', generateAttestationListener)
 }
 
-export function prepareForm () {
-  const formInputs = $$('#form-profile input')
+export function prepareForm() {
+  const formInputs = $$('#form-attestation input')
   const snackbar = $('#snackbar')
   const reasonInputs = [...$$('input[name="field-reason"]')]
   const reasonFieldset = $('#reason-fieldset')
@@ -158,4 +126,48 @@ export function prepareForm () {
   const releaseDateInput = $('#field-datesortie')
   setReleaseDateTime(releaseDateInput)
   prepareInputs(formInputs, reasonInputs, reasonFieldset, reasonAlert, snackbar)
+}
+
+export const submitForm = async () => {
+  const formInputs = $$('#form-attestation input')
+
+  const reasonInputs = [...$$('input[name="field-reason"]')]
+  const reasonFieldset = $('#reason-fieldset')
+  const reasonAlert = reasonFieldset.querySelector('.msg-alert')
+
+  const reasons = getReasons(reasonInputs)
+  if (!reasons) {
+    reasonFieldset.classList.add('fieldset-error')
+    reasonAlert.classList.remove('hidden')
+    reasonFieldset.scrollIntoView && reasonFieldset.scrollIntoView()
+    return
+  }
+
+  const invalid = validateAriaFields(formAttestationConditions)
+  if (invalid) {
+    return
+  }
+
+  const pdfBlob = await generatePdf(getProfile(formInputs), reasons, pdfBase)
+
+  const creationInstant = new Date()
+  const creationDate = creationInstant.toLocaleDateString('fr-CA')
+  const creationHour = creationInstant
+    .toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
+    .replace(':', '-')
+
+  downloadBlob(pdfBlob, `attestation-${creationDate}_${creationHour}.pdf`)
+
+  snackbar.classList.remove('d-none')
+  setTimeout(() => snackbar.classList.add('show'), 100)
+
+  setTimeout(function () {
+    snackbar.classList.remove('show')
+    setTimeout(() => snackbar.classList.add('d-none'), 500)
+  }, 6000)
+}
+
+export function generateAttestationListener(event) {
+  event.preventDefault()
+  submitForm()
 }

@@ -13,7 +13,7 @@ const ys = {
   enfants: 211,
 }
 
-export async function generatePdf (profile, reasons, pdfBase) {
+export async function generatePdf(profile, reasons, pdfBase) {
   const creationInstant = new Date()
   const creationDate = creationInstant.toLocaleDateString('fr-FR')
   const creationHour = creationInstant
@@ -74,18 +74,16 @@ export async function generatePdf (profile, reasons, pdfBase) {
   drawText(placeofbirth, 297, 674)
   drawText(`${address} ${zipcode} ${city}`, 133, 652)
 
-  reasons
-    .split(', ')
-    .forEach(reason => {
-      drawText('x', 78, ys[reason], 18)
-    })
+  reasons.split(', ').forEach((reason) => {
+    drawText('x', 78, ys[reason], 18)
+  })
 
   let locationSize = getIdealFontSize(font, profile.city, 83, 7, 11)
 
   if (!locationSize) {
     alert(
       'Le nom de la ville risque de ne pas être affiché correctement en raison de sa longueur. ' +
-        'Essayez d\'utiliser des abréviations ("Saint" en "St." par exemple) quand cela est possible.',
+        'Essayez d\'utiliser des abréviations ("Saint" en "St." par exemple) quand cela est possible.'
     )
     locationSize = 7
   }
@@ -128,7 +126,7 @@ export async function generatePdf (profile, reasons, pdfBase) {
   return new Blob([pdfBytes], { type: 'application/pdf' })
 }
 
-function getIdealFontSize (font, text, maxWidth, minSize, defaultSize) {
+function getIdealFontSize(font, text, maxWidth, minSize, defaultSize) {
   let currentSize = defaultSize
   let textWidth = font.widthOfTextAtSize(text, defaultSize)
 
