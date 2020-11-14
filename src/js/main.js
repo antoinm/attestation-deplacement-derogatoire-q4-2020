@@ -18,7 +18,6 @@ warnFacebookBrowserUserIfNecessary()
 
 createMyProfilesPage()
 
-console.log('hola', JSON.parse(profiles))
 if (!profiles || JSON.parse(profiles).length === 0 || profiles === null) {
   createFormProfile()
 } else {
