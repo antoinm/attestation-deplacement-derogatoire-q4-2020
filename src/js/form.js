@@ -99,7 +99,7 @@ const createFormGroup = ({
 
   const input = createElement('input', inputAttrs)
 
-  if (name === 'heuresortie') {
+  if (name === 'heuresortie' || name === 'creationHour') {
     input.value = getCurrentTime()
   }
 

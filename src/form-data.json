@@ -11,8 +11,7 @@
       "key": "creationHour",
       "type": "time",
       "contentType": "creationHour",
-      "label": "Heure de création",
-      "isHidden": true
+      "label": "Heure de création"
     },
     {
       "key": "datesortie",

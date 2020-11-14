@@ -34,6 +34,9 @@ const formAttestationConditions = {
   '#field-heuresortie': {
     pattern: /\d{2}:\d{2}/g,
   },
+  '#field-creationHour': {
+    pattern: /\d{2}:\d{2}/g,
+  },
 }
 
 export function validateAriaFields(conditions) {
@@ -148,15 +151,16 @@ export const submitForm = async () => {
     return
   }
 
-  const pdfBlob = await generatePdf(getProfile(formInputs), reasons, pdfBase)
+  const profile = getProfile(formInputs)
+  const pdfBlob = await generatePdf(profile, reasons, pdfBase)
 
   const creationInstant = new Date()
   const creationDate = creationInstant.toLocaleDateString('fr-CA')
-  const creationHour = creationInstant
-    .toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
-    .replace(':', '-')
 
-  downloadBlob(pdfBlob, `attestation-${creationDate}_${creationHour}.pdf`)
+  downloadBlob(
+    pdfBlob,
+    `attestation-${creationDate}_${profile.creationHour}.pdf`
+  )
 
   snackbar.classList.remove('d-none')
   setTimeout(() => snackbar.classList.add('show'), 100)
