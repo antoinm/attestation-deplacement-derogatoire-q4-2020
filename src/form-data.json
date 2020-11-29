@@ -34,39 +34,39 @@
       "items": [
         {
           "code": "travail",
-          "label": "Déplacements entre le domicile et le lieu d’exercice de l’activité professionnelle."
+          "label": "Travail / Études"
         },
         {
-          "code": "achats",
-          "label": "Déplacements pour effectuer des achats de première nécessité"
+          "code": "achats_culturel_cultuel",
+          "label": "Achats / Culture / Culte"
         },
         {
           "code": "sante",
-          "label": "Consultations, examens et soins et l’achat de médicaments ;"
+          "label": "Santé"
         },
         {
           "code": "famille",
-          "label": " Déplacements pour motif familial impérieux, pour l'assistance aux personnes vulnérables et précaires ou la garde d'enfants ;"
+          "label": "Motif familial / garde d'enfants"
         },
         {
           "code": "handicap",
-          "label": "Déplacement des personnes en situation de handicap et leur accompagnant ;"
+          "label": "Situation de handicap"
         },
         {
           "code": "sport_animaux",
-          "label": "Déplacements brefs, sport, animaux;"
+          "label": "Promenade / Sport / animaux"
         },
         {
           "code": "convocation",
-          "label": " Convocation judiciaire ou administrative et pour se rendre dans un service public ;"
+          "label": "Convocation judiciaire/administrative"
         },
         {
           "code": "missions",
-          "label": " Participation à des missions d'intérêt général sur demande de l'autorité administrative ;"
+          "label": "Missions d'intérêt général"
         },
         {
           "code": "enfants",
-          "label": "Déplacement pour chercher les enfants à l’école et à l’occasion de leurs activités périscolaires ;"
+          "label": "École"
         }
       ]
     }
